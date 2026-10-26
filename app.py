@@ -17,6 +17,7 @@ with st.expander("Preview Sample Tax Rates"):
         "Tax Rate": ["40%", "35%", "30%", "25%"]
     }
 
+    # Display the info above into a table
     df = pd.DataFrame(tax_data)
     st.dataframe(df, width="stretch")
 
