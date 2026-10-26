@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+st.title("Income Tax Calculator")
 
 # Allow the user to preview the samples.
 with st.expander("Preview Sample Tax Rates"):
@@ -20,9 +21,9 @@ with st.expander("Preview Sample Tax Rates"):
     }
 
     df = pd.DataFrame(tax_data)
-
     st.dataframe(df, use_container_width=True)
 
+# Function to calculate tax
 def cal_tax(income):
     if income >= 15000:
         tax_amt = income * 0.4
@@ -34,12 +35,20 @@ def cal_tax(income):
         tax_amt = income * 0.25
     return tax_amt
 
-tax1 = cal_tax(15000)
-tax2 = cal_tax(14000)
-tax3 = cal_tax(13000)
-tax4 = cal_tax(12000)
+# Allow the user to enter income
+income = st.number_input(
+    "Enter your income ($)",
+    min_value=0.0,
+    step=100.0,
+    format="%.2f"
+)
 
-print(tax1)
-print(tax2)
-print(tax3)
-print(tax4)
+# Calculate tax when the button is clicked
+if st.button("Calculate Tax"):
+    tax_amt = cal_tax(income)
+
+    st.write(f"Your income: ${income:,.2f}")
+    st.write(f"Your tax rate: {tax_amt / income:.0%}" if income > 0 else "Your tax rate: N/A")
+
+    st.success(f"Your tax amount is ${tax_amt:,.2f}")
+
